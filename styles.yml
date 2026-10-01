@@ -1,0 +1,37 @@
+terse:
+  detail: low
+  tone: slightly rushed, urgent, short, bullet-heavy
+  idea: >
+    Covers the main steps concisely, but may omit some context or assume prior knowledge. 
+    Assumes user has technical familiarity, uses common engineering abbreviations sometimes.
+    Keep technical facts & procedures still intact. 
+    Can use some abbreviations, lower-case & suboptimal formatting,
+    like it was written without much secondary reviews.
+
+sufficient:
+  detail: medium
+  tone: objective, practical, mixed bullet and prose, but still properly formatted
+  idea: >
+    Provide enough explanation for an engineer to follow the procedure without unnecessary detail.
+    Slight ambiguity is allowed.
+    Keep the structure practical, while allowing minor imperfections in wording or organization.
+
+thorough:
+  detail: high
+  tone: practical, clear, bullets where suitable
+  idea: >
+    Produce a carefully structured and thorough document. Explain the
+    procedure clearly, provide useful context where supported by the
+    specification.
+    Organize information so that it is easy to follow. 
+    Use richer formatting, such as code blocks, tables, checklists where appropriate
+    Make it feel well-maintained, but avoid unnecessary verbosity.
+
+legacy:
+  detail: medium
+  tone: practical, clear, mixed bullet and prose, slightly dated, but still properly formatted
+  idea: >
+    Written during early stages of the application's development.
+    Use an informal style with occasional author commments/thoughts.
+    Allow slightly more mutations as the details have changed since then,
+    but documentation may not have been maintained as well, and may contain outdated details.

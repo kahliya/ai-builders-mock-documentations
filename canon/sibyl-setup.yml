@@ -1,0 +1,82 @@
+system: Sibyl System
+environment: production
+
+repository:
+  url: https://github.com/sibyl-hub/sibyl.git
+  branch: master
+
+database:
+  type: mongodb
+  host: localhost
+  port: 27017
+  database: sibyl
+
+deployment:
+  type: docker-compose
+  compose-file: docker-compose.yml
+  cmd: docker compose up -d
+
+configuration-files:
+  - settings.json
+  - nginx.prod.conf
+
+env-vars:
+  - name: MONGO_URI
+    value: mongodb://localhost:27017/sibyl
+
+  - name: SAFE_THRESHOLD
+    value: 100
+
+health:
+  host: localhost
+  port: 2112
+  path: healthz
+
+upstream:
+  - name: scanner-service
+    host: 195.55.55.51
+    port: 5555
+
+  - name: approval-service
+    host: 195.55.55.52
+    port: 5555
+
+  - name: sentry-service
+    host: 195.55.55.55
+    port: 5555
+
+procedure:
+  - action: clone repo
+  - action: configure environment
+    requires: env-vars
+
+  - action: start docker containers
+  - action: check setup by logging in
+
+mutations:
+  - field: repository.branch
+    type: conflict
+    variants: [main, dev]
+
+  - field: database.database
+    type: conflict
+    variants: [sibyl-a]
+
+  - field: deployment.compose-file
+    type: conflict
+    variants: [docker-compose.prod.yml]
+
+  - field: health.port
+    type: conflict
+    variants: [8080]
+
+  - field: upstream.sentry-service.host
+    type: conflict
+    variants: [195.55.55.53]
+
+omissions:
+  - field: env-vars.SAFE_THRESHOLD
+    reason: author assumed value of 100 is common knowledge
+
+  - field: configuration-files
+    reason: forgot to include
